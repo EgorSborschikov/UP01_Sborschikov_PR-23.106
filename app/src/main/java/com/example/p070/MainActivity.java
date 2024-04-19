@@ -41,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
             intent = new Intent(this, newtheatre.class);
         } else if (item.getItemId() == R.id.m4) {
             intent = new Intent(this, newfilm.class);
+        } else if (item.getItemId() == R.id.m5) {
+            intent = new Intent(this, updtheatres.class);
         } else {
             return super.onOptionsItemSelected(item);
         }

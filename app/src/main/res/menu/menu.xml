@@ -16,4 +16,8 @@
         android:id="@+id/m4"
         android:title="Новый фильм"
         android:visible="true" />
+    <item
+        android:id="@+id/m5"
+        android:title="Изменение"
+        android:visible="true" />
 </menu>

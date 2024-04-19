@@ -2,11 +2,11 @@ package com.example.p070;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.JsonReader;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,28 +30,23 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class updtheatres extends AppCompatActivity {
+public class updfilms extends AppCompatActivity {
     TextView tvInfo;
     EditText tvName;
     Button tvButton;
     Button tvButtonU;
     Button tvButtonD;
-    updtheatres.MyTask mt;
-    //updtheatres.MyTaskU mtn;
-    //updtheatres.MyTaskD mtf;
-    ArrayList<updtheatres.MyTaskU>mtu=new ArrayList <updtheatres.MyTaskU>();
-    ArrayList<updtheatres.MyTaskD>mtd=new ArrayList <updtheatres.MyTaskD>();
+    updfilms.MyTask mt;
+    //    updfilms.MyTaskU mtn;
+//    updfilms.MyTaskD mtf;
+    ArrayList<updfilms.MyTaskU>mtu=new ArrayList <updfilms.MyTaskU>();
+    ArrayList<updfilms.MyTaskD>mtd=new ArrayList <updfilms.MyTaskD>();
     ListView lvMain;
 
-
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LayoutInflater inflater = getLayoutInflater();
-        View view = inflater.inflate(R.layout.activity_updtheatres, null);
-        setContentView(R.layout.activity_updtheatres);
+        setContentView(R.layout.activity_updfilms);
         tvInfo = (TextView) findViewById(R.id.tvInfo);
         tvName = (EditText) findViewById(R.id.editTextMask);
         lvMain = (ListView) findViewById(R.id.lvMain);
@@ -59,15 +54,16 @@ public class updtheatres extends AppCompatActivity {
         tvButton = (Button) findViewById(R.id.tvButtonF);
         tvButtonU = (Button) findViewById(R.id.tvButtonU);
         tvButtonD = (Button) findViewById(R.id.tvButtonD);
-//        mt = new updtheatres.MyTask();
+//        mt = new updfilms.MyTask();
 //        mt.execute();
     }
-    public void onclickF (View V){
-        mt = new updtheatres.MyTask();
+
+    public void onclickF(View v) {
+        mt = new updfilms.MyTask();
         mt.execute(tvName.getText().toString());
     }
 
-    public class MyTask extends AsyncTask<String, Void, ArrayList<String[]>>{
+    public class MyTask extends AsyncTask<String, Void, ArrayList<String[]>> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -80,7 +76,7 @@ public class updtheatres extends AppCompatActivity {
             HttpURLConnection myConnection = null;
 
             try {
-                URL githubEndpoint = new URL("http://10.0.2.2:8080/kino?cod=4&name=" + params[0]);
+                URL githubEndpoint = new URL("http://10.0.2.2:8080/kino?cod=5&name=" + params[0]);
                 myConnection =
                         (HttpURLConnection) githubEndpoint.openConnection();
             } catch (MalformedURLException e) {
@@ -129,7 +125,6 @@ public class updtheatres extends AppCompatActivity {
                         if (!jsonReader.hasNext()) break;
                     } catch (IOException e) {
                         e.printStackTrace();
-                        break;
                     }
                     try {
                         jsonReader.beginObject();
@@ -185,7 +180,7 @@ public class updtheatres extends AppCompatActivity {
         protected void onPostExecute(ArrayList<String[]> result) {
 
             super.onPostExecute(result);
-            updtheatres.ClAdapter clAdapter = new updtheatres.ClAdapter(tvInfo.getContext(), result);
+            updfilms.ClAdapter clAdapter = new updfilms.ClAdapter(tvInfo.getContext(), result);
             lvMain = (ListView) findViewById(R.id.lvMain);
             lvMain.setAdapter(clAdapter);
 //            int n=lvMain.getChildCount();
@@ -198,19 +193,14 @@ public class updtheatres extends AppCompatActivity {
     public class ClAdapter extends BaseAdapter {
         Context ctx;
         LayoutInflater lInflater;
-        List<String[]> lines;
+        List<String[]>lines;
 
-        public ClAdapter(Context context, List<String[]> elines) {
-            Context ctx;
-            LayoutInflater lInflater;
-            List<String[]> lines;
-
+        ClAdapter(Context context, List<String[]> elines) {
             ctx = context;
             lines = elines;
             lInflater = (LayoutInflater) ctx
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
-
         @Override
         public int getCount() {
             return lines.size();
@@ -230,12 +220,11 @@ public class updtheatres extends AppCompatActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
             View view = convertView;
             if (view == null) {
-                view = lInflater.inflate(R.layout.itemudp, parent, false);
+                view = lInflater.inflate(R.layout.itemupdf, parent, false);
             }
             ;
             String[] p = (String[]) getItem(position);
             ((TextView) view.findViewById(R.id.tvText)).setText(p[0]);
-            ((TextView) view.findViewById(R.id.tvText1)).setText(p[1]);
 
             return view;
         }
@@ -243,18 +232,13 @@ public class updtheatres extends AppCompatActivity {
         ;
 
 
-    }
 
+    }
     public boolean getCheck(int position) {
 
         return true;
     }
-
-
-
-
     public void onclickU(View v) {
-        onclickU(v);
         int n = lvMain.getChildCount();
         int m = 0;
         for (int i = 0; i < n; i++) {
@@ -262,20 +246,17 @@ public class updtheatres extends AppCompatActivity {
             LinearLayout ll = (LinearLayout) lvMain.getChildAt(i);
             CheckBox ch = (CheckBox) ll.getChildAt(0);
             EditText etn=(EditText) ll.getChildAt(1);
-            EditText eta=(EditText) ll.getChildAt(2);
             if (ch.isChecked()) {
                 String nm=etn.getText().toString();
-                String ad=eta.getText().toString();
-                mtu.add(new updtheatres.MyTaskU());
-                mtu.get(m).execute(nm,ad,st[2]);
+                mtu.add(new updfilms.MyTaskU());
+                mtu.get(m).execute(nm,st[1]);
                 m++;
             }
             ;
         }
     }
 
-    public void onclickD (View v) {
-        onclickD(v);
+    public void onclickD(View v) {
         int n = lvMain.getChildCount();
         int m = 0;
         for (int i = 0; i < n; i++) {
@@ -283,8 +264,8 @@ public class updtheatres extends AppCompatActivity {
             LinearLayout ll = (LinearLayout) lvMain.getChildAt(i);
             CheckBox ch = (CheckBox) ll.getChildAt(0);
             if (ch.isChecked()) {
-                mtd.add(new updtheatres.MyTaskD());
-                mtd.get(m).execute(st[2]);
+                mtd.add(new updfilms.MyTaskD());
+                mtd.get(m).execute(st[1]);
                 m++;
             }
             ;
@@ -292,71 +273,7 @@ public class updtheatres extends AppCompatActivity {
     }
 
 
-
-    public class MyTaskD extends AsyncTask<String, Void, String[]> {
-        @Override
-        protected String[] doInBackground(String... params) {
-            String line = null;
-            String total = null;
-            HttpURLConnection myConnection = null;
-            try {
-                URL githubEndpoint = new URL("http://10.0.2.2:8080/kino/");
-                myConnection =
-                        (HttpURLConnection) githubEndpoint.openConnection();
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            try {
-                myConnection.setRequestMethod("DELETE");
-            } catch (ProtocolException e) {
-                e.printStackTrace();
-            }
-            myConnection.setDoOutput(true);
-            try {
-                myConnection.getOutputStream().write( ("cod=1&id="+params[0]).getBytes());
-            } catch (IOException e) {
-                e.printStackTrace();
-            };
-            int i=0;
-            try {
-                i = myConnection.getResponseCode();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-//                tvInfo.setText(str);
-            if (i==200) {
-                InputStream responseBody=null;
-                try {
-                    responseBody = myConnection.getInputStream();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                BufferedReader r = new BufferedReader(new InputStreamReader(responseBody));
-                while (true) {
-                    try {
-                        if (!((line = r.readLine()) != null)) break;
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    total=line;
-                }
-
-            }
-            myConnection.disconnect();
-            return params;
-        }
-        @Override
-        protected void onPostExecute(String... params) {
-            super.onPostExecute(null);
-
-            tvInfo.setText("End");
-        }
-
-    }
-
-    public class MyTaskU extends AsyncTask<String, Void, String[]> {
+    public class MyTaskU extends AsyncTask<String, Void, String[]>{
         @Override
         protected String[] doInBackground(String... params) {
             String line = null;
@@ -378,7 +295,7 @@ public class updtheatres extends AppCompatActivity {
             }
             myConnection.setDoOutput(true);
             try {
-                myConnection.getOutputStream().write( ("cod=1&name=" + params[0]+"&address="+params[1]+"&id="+params[2]).getBytes());
+                myConnection.getOutputStream().write( ("cod=2&name=" + params[0]+"&id="+params[1]).getBytes());
             } catch (IOException e) {
                 e.printStackTrace();
             };
@@ -416,7 +333,67 @@ public class updtheatres extends AppCompatActivity {
 
             tvInfo.setText("End");
         }
+    }
 
+    public class MyTaskD extends AsyncTask<String, Void, String[]>{
+        @Override
+        protected String[] doInBackground(String... params) {
+            String line = null;
+            String total = null;
+            HttpURLConnection myConnection = null;
+            try {
+                URL githubEndpoint = new URL("http://10.0.2.2:8080/kino/");
+                myConnection =
+                        (HttpURLConnection) githubEndpoint.openConnection();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                myConnection.setRequestMethod("DELETE");
+            } catch (ProtocolException e) {
+                e.printStackTrace();
+            }
+            myConnection.setDoOutput(true);
+            try {
+                myConnection.getOutputStream().write( ("cod=2&id="+params[0]).getBytes());
+            } catch (IOException e) {
+                e.printStackTrace();
+            };
+            int i=0;
+            try {
+                i = myConnection.getResponseCode();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+//                tvInfo.setText(str);
+            if (i==200) {
+                InputStream responseBody=null;
+                try {
+                    responseBody = myConnection.getInputStream();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                BufferedReader r = new BufferedReader(new InputStreamReader(responseBody));
+                while (true) {
+                    try {
+                        if (!((line = r.readLine()) != null)) break;
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    total=line;
+                }
+
+            }
+            myConnection.disconnect();
+            return params;
+        }
+        @Override
+        protected void onPostExecute(String... params) {
+            super.onPostExecute(null);
+
+            tvInfo.setText("End");
+        }
     }
 }
-
