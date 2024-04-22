@@ -51,7 +51,8 @@ public class updtheatres extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         LayoutInflater inflater = getLayoutInflater();
         View view = inflater.inflate(R.layout.activity_updtheatres, null);
-        setContentView(R.layout.activity_updtheatres);
+        setContentView(view);
+        //setContentView(R.layout.activity_updtheatres);
         tvInfo = (TextView) findViewById(R.id.tvInfo);
         tvName = (EditText) findViewById(R.id.editTextMask);
         lvMain = (ListView) findViewById(R.id.lvMain);
@@ -201,9 +202,7 @@ public class updtheatres extends AppCompatActivity {
         List<String[]> lines;
 
         public ClAdapter(Context context, List<String[]> elines) {
-            Context ctx;
-            LayoutInflater lInflater;
-            List<String[]> lines;
+
 
             ctx = context;
             lines = elines;
@@ -234,8 +233,8 @@ public class updtheatres extends AppCompatActivity {
             }
             ;
             String[] p = (String[]) getItem(position);
-            ((TextView) view.findViewById(R.id.tvText)).setText(p[0]);
-            ((TextView) view.findViewById(R.id.tvText1)).setText(p[1]);
+            ((EditText) view.findViewById(R.id.tvText)).setText(p[0]);
+            ((EditText) view.findViewById(R.id.tvText1)).setText(p[1]);
 
             return view;
         }

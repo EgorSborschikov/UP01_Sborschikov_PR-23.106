@@ -18,6 +18,10 @@
         android:visible="true" />
     <item
         android:id="@+id/m5"
-        android:title="Изменение"
+        android:title="Измененить кинотеатр"
+        android:visible="true" />
+    <item
+        android:id="@+id/m6"
+        android:title="Изменить фильм"
         android:visible="true" />
 </menu>
