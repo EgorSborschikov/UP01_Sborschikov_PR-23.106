@@ -234,10 +234,10 @@ public class updfilms extends AppCompatActivity {
 
 
     }
-    public boolean getCheck(int position) {
+        public boolean getCheck(int position) {
 
-        return true;
-    }
+            return true;
+        }
     public void onclickU(View v) {
         int n = lvMain.getChildCount();
         int m = 0;
